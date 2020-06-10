@@ -44,16 +44,14 @@ class Robot : public frc::TimedRobot {
 
 ```cpp
 void RobotInit() override; // This is called once when the robot code initializes
-void RobotPeriodic() override; // This is called every period regardless of mode
+void RobotPeriodic() override; // This is called every period (~50 times/sec) regardless of mode
 void AutonomousInit() override; // This is called once when the robot first enters autonomous mode
-void AutonomousPeriodic() override; // This is called periodically while the robot is in autonomous mode
+void AutonomousPeriodic() override; // This is called every period (~50 times/sec) while the robot is in autonomous mode
 void TeleopInit() override; // This is called once when the robot first enters teleoperated mode
-void TeleopPeriodic() override; // This is called periodically while the robot is in teleopreated mode
-// void TestInit() override; // This is called once when the robot enters test mode
-// void TestPeriodic() override; // This is called periodically while the robot is in test mode
+void TeleopPeriodic() override; // This is called every period (~50 times/sec) while the robot is in teleoperated mode
 ```
 
-Read more about the file structure [here](files.md)
+Read more about the file structure of the project [here](files.md)
 
 ## Step 3a: Research - Already Written Code
 
@@ -77,7 +75,7 @@ In general, each part of the robot is located in 3 locations:
 
 > 'No side effects' means that running the function does not change any variables in other functions. This can lead to annoying bugs.
 
-**Before clicking on these links, try to find the 3 parts of the drivetrain in the code yourself!**
+**Before clicking on these links, try to find the 3 sections of code of the drivetrain in the [2020 Robot code](https://github.com/FRC830/2020Robot/tree/master/src/main) yourself!**
 
 Looking at 2020Robot, we can see this pattern:
 + The drivetrain definition is located [here](https://github.com/FRC830/2020Robot/blob/master/src/main/include/Robot.h#L112) (and uses numbers defined above in the header).
