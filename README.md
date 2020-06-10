@@ -139,9 +139,9 @@ We can click on the constructor to figure out what we need to setup the motor wh
 
 We also can see other methods that could be useful, like `Set(TalonSRXControlMode mode, double value)`.
 
-**On your own, pull up the documentation for `VictorSPX` and `DifferentialDrive`**
+**On your own, pull up the documentation for `VictorSPX``**
 
-**Also try to find the documentation for the `XboxController` class. What page would this most likely be located on?**
+**Also try to find the documentation for the `XboxController`  and `DifferentialDrive class. What page would these most likely be located on?**
 
 
 ## Step 3c: Research - Reverse Engineering
@@ -154,11 +154,13 @@ I wish 2019Robot had used `XboxController` for the sake of this tutorial, but al
 
 
 ```cpp
-    // ...
-
+// Robot.h
+class Robot : public frc::TimedRobot {
+public:
 	// Controller declarations
 	Lib830::GamepadF310 pilot {0};
 	Lib830::GamepadF310 copilot {1};
+}
 ```
 
 > 2020Robot and WALL-O use `XboxController` if you want to see it in action. This same reason is why I didn't use `2020Robot` to explain, as the motors are wrapped in a custom class.
