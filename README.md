@@ -3,17 +3,22 @@
 
 This guide will be a start to finish guide with pictures of how to develop a basic drivetrain class.
 
++ If something is bolded, make sure you complete it before reading further
++ If something is quoted, it is additional information or a tip
 ## Step 0: Installing Libraries
 
 + Open VSCode 202x (I am using 2020).
 + Go to the extensions tab, and make sure you have WPILib Installed and that it is up to date
-+ Create a new folder in the `workspace` folder to follow along
++ Create a new repository on your personal github and clone it to the `workspace` folder
++ Make sure the repository includes your name, either the local copy or the github repository
 
 ![](assets/extensions.png)
 
 ## Step 1: Setting up `TimedRobot`
 
 > This step is extremely well explained in [the docs](https://docs.wpilib.org/en/stable/docs/software/wpilib-overview/creating-robot-program.html).
+
+**Follow the steps outlined in the [docs](https://docs.wpilib.org/en/stable/docs/software/wpilib-overview/creating-robot-program.html) with the configuration in the image below.**
 
 When you get to the `New Project Creator Window`, Use `template`, `c++`, and `timed`. I choose the `Timed Skeleton (Advanced)` because it does not have anything to delete later.
 
@@ -23,12 +28,16 @@ Your code will now look like this after you reopen your *original folder*:
 
 ![](assets/setup.png)
 
-> The main purpose of doing it this way is that wpilib will not let you create into an empty folder, **including `.git`**. This means that instead of a `git clone`, you would have to initialize a git repository from scratch, which [can be tricky](https://kbroman.org/github_tutorial/pages/init.html).
 
 + Select all the subfolders of `temporary-code` (or whatever you named the project) and drag them out.
     + *click the top one, hold shift then click the bottom one to select all*
 + Now you can delete the `temporary-code` folder.
 
+> The main purpose of doing it this way is that wpilib will not let you create into an empty folder, **including `.git`**. This means that instead of a `git clone`, you would have to initialize a git repository from scratch, which [can be tricky](https://kbroman.org/github_tutorial/pages/init.html).
+
+**Commit all the files to github**
+
+> As a hint, remember you must first add all the files with `git add .`, then `git commit --message "my message"` and finally `git push`.
 ## Step 2: File Structure
 
 ![](assets/code.png)
