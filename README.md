@@ -7,11 +7,10 @@ This guide will be a start to finish guide with pictures of how to develop a bas
 + If something is quoted, it is additional information or a tip
 ## Step 0: Installing Libraries
 
-+ Open VSCode 202x (I am using 2020).
++ Open FRC VSCode 202x (I am using 2020).
 + Go to the extensions tab, and make sure you have WPILib Installed and that it is up to date
 + Create a new repository on your personal github and clone it to the `workspace` folder
 + Make sure the repository includes your name, either the local copy or the github repository
-
 ![](assets/extensions.png)
 
 ## Step 1: Setting up `TimedRobot`
@@ -38,6 +37,17 @@ Your code will now look like this after you reopen your *original folder*:
 **Commit all the files to github**
 
 > As a hint, remember you must first add all the files with `git add .`, then `git commit --message "my message"` and finally `git push`.
+
+## Step 1.1: Install CTRE
+
+For this tutorial, you will also need the CTRE Library from [here](http://www.ctr-electronics.com/hro.html#product_tabs_technical_resources). On the workstation computers this could already be installed. Then, Right-Click on "build.gradle" in the project tree and select "Manage Vendor Libraries".
+
+![](assets/verify-4.png)
+
+Select "Install new libraries (offline)" and a menu will pop up with all the libraries you can install. Check CTRE Phoenix then OK.
+
+![](assets/verify-6.png)
+
 ## Step 2: File Structure
 
 ![](assets/code.png)
