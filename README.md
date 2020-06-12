@@ -91,14 +91,14 @@ In general, each part of the robot is located in 3 locations:
   + Important constants that it may rely on
 2. The **configuration** of these definitions
   + located in either `RobotInit` or sometimes in `TeleopInit` and `AutonomousInit`.
-3. The **main** logic involving it
+3. The main **logic** involving it
   + Is usually called repeatedly from `TeleopPeriodic` or `AutonomousPeriodic`.
 
 > The only reason `RobotPeriodic` would be used is if we are logging a value in both `Teleoperated` and `Autonomous` mode
 
-**Before clicking on these links, try to find the 3 sections of code of the drivetrain in the [2020 Robot code](https://github.com/FRC830/2020Robot/tree/master/src/main) yourself!**
+**Find the 3 sections of code of the drivetrain (definition, configuration, logic) in the [2020 Robot code](https://github.com/FRC830/2020Robot/tree/master/src/main)**
 
-Looking at 2020Robot, we can see this pattern:
+Answers:
 + The drivetrain definition is located [here](https://github.com/FRC830/2020Robot/blob/master/src/main/include/Robot.h#L112) (and uses numbers defined above in the header).
 + The configuration is located [here](https://github.com/FRC830/2020Robot/blob/master/src/main/cpp/Robot.cpp#L14).
 + The logic is located [here](https://github.com/FRC830/2020Robot/blob/master/src/main/cpp/Robot.cpp#L236).
@@ -110,8 +110,8 @@ Looking at 2020Robot, we can see this pattern:
 While previous projects allow us to see things we have already done, what happens if you need a new feature or are confused? This is where can look at the docs. Depending on the vendor, we might look at different documentation pages.
 
 + For 90% of our stuff, we can look at the core [WPILib Docs](https://first.wpi.edu/FRC/roborio/release/docs/cpp/).
-+ For the Spark Max motor, we can look at the [Rev Robotics Docs](https://www.revrobotics.com/content/sw/max/sw-docs/cpp/index.html)
 + For TalonSRX / FX and VictorSPX motors, we can look at [CTRE Docs](https://www.ctr-electronics.com/downloads/api/cpp/html/index.html)
++ For the Spark Max motor, we can look at the [Rev Robotics Docs](https://www.revrobotics.com/content/sw/max/sw-docs/cpp/index.html)
 
 As an exercise, lets reverse engineer the `2019Robot` drivetrain located in the header [here](https://github.com/FRC830/2019Robot/blob/master/src/main/include/Robot.h).
 
