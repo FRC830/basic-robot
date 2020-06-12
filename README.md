@@ -148,7 +148,7 @@ As I mentioned, the CTRE docs are where we can find `TalonSRX` and `VictorSPX` p
 ![](assets/talon.png)
 
 Now we can see all the methods on this motor.
-> You may have noticed that this is not `WPI_TalonSRX` just `TalonSRX`. It was renamed and is now a depreciated class. We can see a note showing that `WPI_TalonSRX` Inherits `TalonSRX`
+> You may have noticed that this is not `WPI_TalonSRX` just `TalonSRX`. We will use the `WPI_TalonSRX` as it is compatible with WPILib classes such as `SpeedControllerGroup`.
 
 ![](assets/adoc.png)
 

@@ -6,12 +6,13 @@
 
 
 - [ ] Complete Step 1 on the README
-- [ ] create 4 WPI_TalonSRX Motors with different CAN ID's.
+- [ ] create 4 `WPI_TalonSRX` Motors with different CAN ID's.
   - This may require an import of the CTRE Library
+  - Make sure you use `WPI_TalonSRX` not `TalonSRX` as it is compatible with `SpeedControllerGroup`.
   - The CAN ID's should be defined as constants
 - [ ] create an instance of the XboxController class
   - [ ] Use a `SpeedControllerGroup` for each side of the robot
-  - We are not following the front motors! Make sure you look up this class in the docs.
+  - We are not following the front motors! Make sure you look up `SpeedControllerGroup` in the docs.
 - [ ] create an instance of the DifferentialDrive class
   - [ ] We are passing in the 2 `SpeedControllerGroup`'s we just created
 - [ ] Reset all four motors to factory
