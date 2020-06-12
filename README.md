@@ -152,17 +152,17 @@ Now we can see all the methods on this motor.
 
 ![](assets/adoc.png)
 
-> Some additional methods are inherited from `BaseMotorController`. This is a standard c++ inheritable pattern, as the TalonSRX just adds additional functionality to a basic motor. Some methods we can see here include `SetInverted` (not shown in the picture), which inverts a motor, and many more.
+> Some additional methods are inherited from `BaseTalon` and then `BaseMotorController`. This is a standard c++ inheritable pattern, as the TalonSRX just adds additional functionality to a basic motor. Some methods we can see here include `SetInverted` (not shown in the picture), which inverts a motor, and many more.
 > 
 We can click on the constructor to figure out what we need to setup the motor which turns out to be the CAN Device ID on our robot.
 
 ![](assets/talonc.png)
 
-We also can see other methods that could be useful, like `Set(TalonSRXControlMode mode, double value)`.
+We will be using `Set(TalonSRXControlMode mode, double value)` later.
 
-**On your own, pull up the documentation for `VictorSPX``**
+**On your own, pull up the documentation for the `VictorSPX` class**
 
-**Also try to find the documentation for the `XboxController`  and `DifferentialDrive class. What page would these most likely be located on?**
+**Find the documentation for the `XboxController`  and `DifferentialDrive` class.**
 
 
 ## Step 3c: Research - Reverse Engineering
@@ -170,31 +170,33 @@ We also can see other methods that could be useful, like `Set(TalonSRXControlMod
 Great! Now that you looked all of those up, and didn't skip ahead (because just reading won't help you - it's actually doing and following along) we can continue. Lets continue reverse engineering `2019Robot`.
 
 
-#### ~~XboxController~~ Lib830::GamepadF310
-I wish 2019Robot had used `XboxController` for the sake of this tutorial, but alas we can see otherwise in the header here:
+#### ~~XboxController~~ GamepadF310
+I wish 2019Robot had used `XboxController` for the sake of this tutorial, but alas we can see otherwise in the header:
 
 
 ```cpp
 // Robot.h
 class Robot : public frc::TimedRobot {
 public:
+    // ...
 	// Controller declarations
 	Lib830::GamepadF310 pilot {0};
 	Lib830::GamepadF310 copilot {1};
+    // ...
 }
 ```
 
 > 2020Robot and WALL-O use `XboxController` if you want to see it in action. This same reason is why I didn't use `2020Robot` to explain, as the motors are wrapped in a custom class.
 > 
-Sometimes, we create custom classes to add additional functionality. Past programmers made a custom RatPack libary that we can use with a bunch of utility classes, including `GamepadF310`. The library is located [on GitHub here](https://github.com/FRC830/Lib830).
+Sometimes, we create custom classes to add additional functionality. Past programmers made a custom library that we can use with a bunch of utility classes, including `GamepadF310`. The library is located [on GitHub here](https://github.com/FRC830/Lib830).
 
 **Try finding the definition of the `GamepadF310` class by searching on github or just browsing around the repo.**
 
 We can see it [here (.cpp)](https://github.com/FRC830/Lib830/blob/master/input/GamepadF310.cpp) and [here (.h)](https://github.com/FRC830/Lib830/blob/master/input/GamepadF310.h) if you couldn't find it.
 
-This is just a replacement for XboxController, and if we want to see what functions it has, we can look at these files.
+This is just a replacement for XboxController, and if we want to see what functions it has, we can look at those two files (and the `Gamepad` class it inherits).
 
-Now lets see why you might care. We can Control+F `pilot` in `Robot.cpp` to see everywhere we use the controller. It turns out we use a controller a lot when writing robot *control* code.
+Why do we care so much about the controller? We can Control+F `pilot` in `Robot.cpp` to see everywhere we use the controller. It turns out we use a controller a lot when writing robot *control* code.
 
 ![](assets/pilot.png)
 
@@ -202,8 +204,6 @@ We also find [a function](https://github.com/FRC830/2019Robot/blob/master/src/ma
 
 ```cpp
 void Robot::handleDrivetrain() {
-    // ...
-    speed = Lib830::accel(prevSpeed, drivetrainDeadzone(pilot.LeftY()), TICKS_TO_ACCEL);
     // ...
 }
 ```
@@ -213,6 +213,8 @@ interesting... we will return to this later.
 ### Configuration
 
 All the configuration is done in `RobotInit` (for the drivetrain at least).
+
+> This is usually a best practice, as not a lot of configuration happens that is specific to the `Teleop` or `Auton` modes.
 
 ```cpp
 void Robot::RobotInit() {
@@ -226,7 +228,7 @@ void Robot::RobotInit() {
     // Set Victors to follow Talons
     rightBack.Follow(rightFront);
     leftBack.Follow(leftFront);
-    // For if we need to change it later
+
     rightFront.SetSensorPhase(false);
     leftFront.SetSensorPhase(false);
 
@@ -234,7 +236,6 @@ void Robot::RobotInit() {
     rightBack.SetInverted(false);
     leftFront.SetInverted(false);
     leftBack.SetInverted(false);
-    // Setup Gyro
     // ...
 }
 ```
@@ -255,13 +256,12 @@ If you remember back to the original snippet in the header, we were only using t
 frc::DifferentialDrive drivetrain {leftFront, rightFront};
 ```
 
-Now, we have all 4 motors involved.
+Now, we have all 4 motors involved, as the back motors 'mirror' the front two.
 
 ### The logic
 
-![](assets/logic.png)
+This is the full handleDrivetrain function we have. Don't be overwhelmed, 90% we don't need to worry about.
 
-Maybe not that one, but this is the last part of code we will look at! Since this code snippet involves some additional features, it will be a little longer than usual.
 ```cpp
 void Robot::handleDrivetrain() {
     //pilot controls were changed because of new controllers, was right x, LeftTrigger is really zaxis
@@ -297,9 +297,11 @@ void Robot::handleDrivetrain() {
 }
 ```
 
-This is the first snippet that uses `SmartDashboard`. SmartDashboard is some logging software that we can use to store and write values for testing. We write and read from it throughout this function.
+This is the first snippet that uses `SmartDashboard`. SmartDashboard is a logging class that we can use to store and write values for testing on `Shuffleboard`. We write and read from it throughout this function.
 
-I will just be focusing on the most minimal example possible, so I am going to trim this function down to make it easier to read:
+> We use Shuffleboard a lot throughout the season, just to make sure things are functioning correctly.
+
+Lets trim this function down to what we need:
 
 ```cpp
 void Robot::handleDrivetrain() {
