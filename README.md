@@ -85,14 +85,16 @@ Luckily, we have resources available! As we reuse the same motors (and sometimes
 + [WALL-O](https://github.com/FRC830/WALL-O)
 
 In general, each part of the robot is located in 3 locations:
-+ The definition is located in the header, which contains informations such as:
-  + Type of Motor / Sensor
+1. The **definition** is located in the header, which contains informations such as:
+  + Class of Motor / Sensor
   + Pins it uses
   + Important constants that it may rely on
-+ The configuration is located in either `RobotInit` or less frequently in `TeleopInit` and `AutonomousInit`.
-+ The logic that involves the motor / sensor can be scattered throughout the project. A best practice is to contain this code in a single function with no side effects*.
+2. The **configuration** of these definitions
+  + located in either `RobotInit` or sometimes in `TeleopInit` and `AutonomousInit`.
+3. The **main** logic involving it
+  + Is usually called repeatedly from `TeleopPeriodic` or `AutonomousPeriodic`.
 
-> 'No side effects' means that running the function does not change any variables in other functions. This can lead to annoying bugs.
+> The only reason `RobotPeriodic` would be used is if we are logging a value in both `Teleoperated` and `Autonomous` mode
 
 **Before clicking on these links, try to find the 3 sections of code of the drivetrain in the [2020 Robot code](https://github.com/FRC830/2020Robot/tree/master/src/main) yourself!**
 
