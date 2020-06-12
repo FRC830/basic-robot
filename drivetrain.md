@@ -6,7 +6,7 @@
 
 
 - [ ] Complete Step 1 on the README
-- [ ] create 4 TalonSRX Motors with different CAN ID's.
+- [ ] create 4 WPI_TalonSRX Motors with different CAN ID's.
   - This may require an import of the CTRE Library
   - The CAN ID's should be defined as constants
 - [ ] create an instance of the XboxController class
